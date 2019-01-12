@@ -1,7 +1,13 @@
 const express = require('express')
 var five = require("johnny-five");
+var cors = require('cors')
+var bodyParser = require('body-parser');
 const app = express()
 const port = 3002
+
+
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 
 var board = new five.Board();
@@ -12,6 +18,8 @@ app.use(function(req, res, next) {
     req.connection.setNoDelay(true)
     next();
   });
+
+app.use(cors())
 
 board.on("ready", function() {
     let led = new five.Led.RGB({
@@ -31,16 +39,20 @@ board.on("ready", function() {
     // red.on();
     app.get('/switchOn', (req, res) => {
         led.on()
-        res.send("yes")
-        // console.log(res)
+        res.send("on")
+        console.log('on')
     });
 
     app.get('/switchOff', (req, res) => {
-        console.log("goodbye")
-        
-        // console.log(res)
+        console.log("off")
         led.off()
-        res.send("yes")
+        res.send("off")
+    })
+
+    app.patch('/setColor', (req, res) => {
+        console.log("set")
+        led.color(req.body)
+        res.send('set')
     })
 })
 
