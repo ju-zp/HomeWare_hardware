@@ -20,9 +20,9 @@ board.on("ready", function() {
             green: 10,
             blue: 11
         },
-        anode: true
+        isAnode: true
     })
-    led.on()
+    led.off()
     // var red = new five.Led(9);
     // var green = new five.Led(10);
     // var blue = new five.Led(11);
@@ -30,8 +30,7 @@ board.on("ready", function() {
     // blue.on();
     // red.on();
     app.get('/switchOn', (req, res) => {
-        led.off()
-        console.log("hello")
+        led.on()
         res.send("yes")
         // console.log(res)
     });
@@ -40,7 +39,7 @@ board.on("ready", function() {
         console.log("goodbye")
         
         // console.log(res)
-        led.on()
+        led.off()
         res.send("yes")
     })
 })
