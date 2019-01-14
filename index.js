@@ -45,7 +45,8 @@ board.on("ready", function() {
 
     led.off()
 
-    app.get('/welcome', (req, res) => {
+    app.post('/welcome', (req, res) => {
+        console.log(req.body)
         lcd.cursor(0,0).print("hello")
     })
     
