@@ -49,7 +49,7 @@ board.on("ready", function() {
         console.log('welcome')
         lcd.clear()
         const username = req.body.username.charAt(0).toUpperCase() + req.body.username.slice(1)
-        lcd.cursor(0,0).print("Hello, " + username + '!')
+        lcd.cursor(0,0).print('Hello, ' + username + '!')
         res.send('welcome')
     })
     
@@ -72,8 +72,10 @@ board.on("ready", function() {
     })
 
     app.get('/temperature', (req, res) => {
+        const reading = tempSensor.celsius
         console.log('temperature')
-        res.json({reading: tempSensor.celsius})
+        res.json({reading: reading})
+        lcd.cursor(0,1).print('Temperature: ' + reading)
     })
 })
 
