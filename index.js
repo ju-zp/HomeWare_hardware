@@ -30,13 +30,14 @@ board.on("ready", function() {
         },
         isAnode: true
     })
+
+    let tempSensor = new five.Thermometer({
+        controller: 'LM35',
+        pin: 'A1'
+    })
+
     led.off()
-    // var red = new five.Led(9);
-    // var green = new five.Led(10);
-    // var blue = new five.Led(11);
-    // green.on();
-    // blue.on();
-    // red.on();
+    
     app.get('/switchOn', (req, res) => {
         led.on()
         res.send("on")
