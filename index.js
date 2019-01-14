@@ -35,7 +35,7 @@ board.on("ready", function() {
         controller: 'LM35',
         pin: 'A1',
         toCelsius: raw => {
-            return (raw/sensivity) = offset
+            return (raw * 0.5)
         } 
     })
 
@@ -61,6 +61,8 @@ board.on("ready", function() {
 
     app.get('/temperature', (req, res) => {
         console.log('temperature')
+        console.log(tempSensor.celsius)
+        res.send(tempSensor.celsius)
     })
 })
 
