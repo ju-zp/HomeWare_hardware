@@ -44,6 +44,10 @@ board.on("ready", function() {
     })
 
     led.off()
+
+    app.get('/welcome', (req, res) => {
+        lcd.cursor(0,0).print("hello")
+    })
     
     app.get('/switchOn', (req, res) => {
         led.on()
