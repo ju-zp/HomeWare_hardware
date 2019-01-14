@@ -78,7 +78,11 @@ board.on("ready", function() {
         res.json({reading: reading})
         lcd.clear()
         lcd.cursor(0,0).print('Hello, ' + username + '!')
-        lcd.cursor(1,0).autoscroll().print('Temperature: ' + reading + 'C').print('Current Temp: ' + reading + 'C')
+        lcd.cursor(1,0).print('Temperature: ' + reading + 'C')
+        setTimeout(() => {
+            lcd.clear()
+            lcd.cursor(0,0).print('Hello, ' + username + '!')
+        }, 5000)
     })
 })
 
