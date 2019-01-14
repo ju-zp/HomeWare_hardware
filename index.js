@@ -75,7 +75,7 @@ board.on("ready", function() {
         const reading = tempSensor.celsius
         console.log('temperature')
         res.json({reading: reading})
-        lcd.cursor(1,0).print('Temp: ' + reading)
+        lcd.cursor(1,0).print('Temp: ' + reading + 'C')
     })
 })
 
