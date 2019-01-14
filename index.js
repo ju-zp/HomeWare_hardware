@@ -61,8 +61,7 @@ board.on("ready", function() {
 
     app.get('/temperature', (req, res) => {
         console.log('temperature')
-        console.log(tempSensor.celsius)
-        res.send(tempSensor.celsius)
+        res.json({reading: tempSensor.celsius})
     })
 })
 
