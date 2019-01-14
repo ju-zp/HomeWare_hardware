@@ -86,6 +86,12 @@ board.on("ready", function() {
             welcomeMessage()
         }, 5000)
     })
+
+    app.get('/logout', (req, res) => {
+        username = ''
+        lcd.clear()
+        lcd.cursor(0,0).print('IDLE')
+    })
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
