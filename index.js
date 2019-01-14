@@ -88,9 +88,11 @@ board.on("ready", function() {
     })
 
     app.get('/logout', (req, res) => {
+        console.log('goodbye')
         username = ''
         lcd.clear()
         lcd.cursor(0,0).print('IDLE')
+        res.send('goodbye')
     })
 })
 
