@@ -1,7 +1,13 @@
 const express = require('express')
 var five = require("johnny-five");
+var cors = require('cors')
+var bodyParser = require('body-parser');
 const app = express()
 const port = 3002
+
+
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 
 var board = new five.Board();
@@ -13,6 +19,8 @@ app.use(function(req, res, next) {
     next();
   });
 
+app.use(cors())
+
 board.on("ready", function() {
     let led = new five.Led.RGB({
         pins: {
@@ -20,28 +28,40 @@ board.on("ready", function() {
             green: 10,
             blue: 11
         },
-        anode: true
+        isAnode: true
     })
-    led.on()
-    // var red = new five.Led(9);
-    // var green = new five.Led(10);
-    // var blue = new five.Led(11);
-    // green.on();
-    // blue.on();
-    // red.on();
+
+    let tempSensor = new five.Thermometer({
+        controller: 'LM35',
+        pin: 'A1',
+        toCelsius: raw => {
+            return (raw * 0.5)
+        } 
+    })
+
+    led.off()
+    
     app.get('/switchOn', (req, res) => {
-        led.off()
-        console.log("hello")
-        res.send("yes")
-        // console.log(res)
+        led.on()
+        res.send("on")
+        console.log('on')
     });
 
     app.get('/switchOff', (req, res) => {
-        console.log("goodbye")
-        
-        // console.log(res)
-        led.on()
-        res.send("yes")
+        console.log("off")
+        led.off()
+        res.send("off")
+    })
+
+    app.patch('/setColor', (req, res) => {
+        console.log("set")
+        led.color(req.body)
+        res.send('set')
+    })
+
+    app.get('/temperature', (req, res) => {
+        console.log('temperature')
+        res.json({reading: tempSensor.celsius})
     })
 })
 
