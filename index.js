@@ -33,7 +33,10 @@ board.on("ready", function() {
 
     let tempSensor = new five.Thermometer({
         controller: 'LM35',
-        pin: 'A1'
+        pin: 'A1',
+        toCelsius: raw => {
+            return (raw/sensivity) = offset
+        } 
     })
 
     led.off()
@@ -54,6 +57,10 @@ board.on("ready", function() {
         console.log("set")
         led.color(req.body)
         res.send('set')
+    })
+
+    app.get('/temperature', (req, res) => {
+        console.log('temperature')
     })
 })
 
