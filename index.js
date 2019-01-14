@@ -46,24 +46,27 @@ board.on("ready", function() {
     led.off()
 
     app.post('/welcome', (req, res) => {
-        console.log(req.body)
-        lcd.cursor(0,0).print("hello")
+        console.log('welcome')
+        lcd.clear()
+        const username = req.body.username.charAt(0).toUpperCase() + req.body.username.slice(1)
+        lcd.cursor(0,0).print("Hello, " + username + '!')
+        res.send('welcome')
     })
     
     app.get('/switchOn', (req, res) => {
+        console.log('on')
         led.on()
         res.send("on")
-        console.log('on')
     });
 
     app.get('/switchOff', (req, res) => {
-        console.log("off")
+        console.log('off')
         led.off()
-        res.send("off")
+        res.send('off')
     })
 
     app.patch('/setColor', (req, res) => {
-        console.log("set")
+        console.log('set')
         led.color(req.body)
         res.send('set')
     })
