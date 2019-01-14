@@ -44,13 +44,18 @@ board.on("ready", function() {
     })
 
     led.off()
+    lcd.cursor(0,0).print('IDLE')
     let username
+
+    welcomeMessage = ()=>{
+        lcd.clear()
+        lcd.cursor(0,0).print('Hello, ' + username + '!')
+    }
 
     app.post('/welcome', (req, res) => {
         console.log('welcome')
-        lcd.clear()
         username = req.body.username.charAt(0).toUpperCase() + req.body.username.slice(1)
-        lcd.cursor(0,0).print('Hello, ' + username + '!')
+        welcomeMessage()
         res.send('welcome')
     })
     
@@ -76,12 +81,9 @@ board.on("ready", function() {
         const reading = tempSensor.celsius
         console.log('temperature')
         res.json({reading: reading})
-        lcd.clear()
-        lcd.cursor(0,0).print('Hello, ' + username + '!')
         lcd.cursor(1,0).print('Temperature: ' + reading + 'C')
         setTimeout(() => {
-            lcd.clear()
-            lcd.cursor(0,0).print('Hello, ' + username + '!')
+            welcomeMessage()
         }, 5000)
     })
 })
