@@ -39,6 +39,10 @@ board.on("ready", function() {
         } 
     })
 
+    let lcd = new five.LCD({
+        pins: [13, 12, 5, 4, 3, 2]
+    })
+
     led.off()
     
     app.get('/switchOn', (req, res) => {
