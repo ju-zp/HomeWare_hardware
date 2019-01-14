@@ -94,6 +94,11 @@ board.on("ready", function() {
         lcd.cursor(0,0).print('IDLE')
         res.send('goodbye')
     })
+
+    this.on('exit', () => {
+        led.off()
+        lcd.clear()
+    })
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
