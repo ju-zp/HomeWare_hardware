@@ -39,29 +39,58 @@ board.on("ready", function() {
         } 
     })
 
+    let lcd = new five.LCD({
+        pins: [13, 12, 5, 4, 3, 2]
+    })
+
     led.off()
+    lcd.cursor(0,0).print('IDLE')
+    let username
+
+    welcomeMessage = ()=>{
+        lcd.clear()
+        lcd.cursor(0,0).print('Hello, ' + username + '!')
+    }
+
+    app.post('/welcome', (req, res) => {
+        console.log('welcome')
+        username = req.body.username.charAt(0).toUpperCase() + req.body.username.slice(1)
+        welcomeMessage()
+        res.send('welcome')
+    })
     
     app.get('/switchOn', (req, res) => {
+        console.log('on')
         led.on()
         res.send("on")
-        console.log('on')
     });
 
     app.get('/switchOff', (req, res) => {
-        console.log("off")
+        console.log('off')
         led.off()
-        res.send("off")
+        res.send('off')
     })
 
     app.patch('/setColor', (req, res) => {
-        console.log("set")
+        console.log('set')
         led.color(req.body)
         res.send('set')
     })
 
     app.get('/temperature', (req, res) => {
+        const reading = tempSensor.celsius
         console.log('temperature')
-        res.json({reading: tempSensor.celsius})
+        res.json({reading: reading})
+        lcd.cursor(1,0).print('Temperature: ' + reading + 'C')
+        setTimeout(() => {
+            welcomeMessage()
+        }, 5000)
+    })
+
+    app.get('/logout', (req, res) => {
+        username = ''
+        lcd.clear()
+        lcd.cursor(0,0).print('IDLE')
     })
 })
 
