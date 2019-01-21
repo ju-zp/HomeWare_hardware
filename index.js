@@ -91,6 +91,7 @@ board.on("ready", function() {
         console.log('goodbye')
         username = ''
         lcd.clear()
+        led.off()
         lcd.cursor(0,0).print('IDLE')
         res.send('goodbye')
     })
