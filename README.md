@@ -1,5 +1,7 @@
 # Hou-Smart Hardware
 
+![alt text](https://github.com/ju-zp/Hou-Smart_hardware/blob/master/hardware.jpg 'hardware')
+
 ### Introduction
 
 An express server to connect and controller Arduino hardware. The client can be found [here](https://github.com/ju-zp/Hou-Smart_client)
